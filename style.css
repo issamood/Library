@@ -1,0 +1,15 @@
+.libraryBox {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 200px));
+    gap: 25px;
+    margin-top: 25px;
+    margin-left: 25px;
+    margin-right: 25px;
+}
+
+.book{
+    text-align: center;
+    border: 1px black solid;
+    border-radius: 5px;
+    padding: 20px;
+}
