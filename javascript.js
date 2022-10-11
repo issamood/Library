@@ -8,13 +8,43 @@ function Book(author, title, pages, haveRead) {
 }
 
 function displayLibrary(library) {
+    let libraryBox = document.querySelector('.libraryBox');
+    let allBooks = document.querySelectorAll('.book');
+
+    allBooks.forEach(book => {
+        libraryBox.removeChild(book);
+    })
 
     for (let book of library) {
+            let divBook = document.createElement('div');
+            divBook.setAttribute('class','book');
+            libraryBox.appendChild(divBook);
 
+            let titleDiv = document.createElement('div');
+            titleDiv.textContent = 'Title: ' + book.title;
+            titleDiv.setAttribute = ('id', 'title');
+            divBook.appendChild(titleDiv);
+
+            let authorDiv = document.createElement('div');
+            authorDiv.textContent = 'Author: ' + book.author;
+            authorDiv.setAttribute = ('id', 'author');
+            divBook.appendChild(authorDiv);
+
+            let pagesDiv = document.createElement('div');
+            pagesDiv.textContent = 'Pages: ' + book.pages;
+            pagesDiv.setAttribute('id', 'pages');
+            divBook.appendChild(pagesDiv);
+
+            let haveReadDiv = document.createElement('div');
+            haveReadDiv.textContent = "Have read: " + book.haveRead;
+            divBook.setAttribute('id', 'haveRead');
+            divBook.appendChild(haveReadDiv);
+            
     }
 }
 
 function addBookToLibrary() {
+    //Saving value into myLibrary array
     let bookAuthor = document.querySelector("#bookAuthor").value;
     let bookTitle = document.querySelector("#bookTitle").value;
     let bookPages = document.querySelector("#bookPages").value;
@@ -42,7 +72,8 @@ function addBookToLibrary() {
     radios.forEach(radio => {
         radio.checked = false;
     });
-    event.preventDefault();
+
+    displayLibrary(myLibrary);
 }
 
 let bookBtn = document.querySelector("#newBookBtn");
@@ -54,6 +85,7 @@ bookBtn.addEventListener('click', () => {
         const bookForm = document.createElement('form');
         bookForm.setAttribute("id", "bookForm");
         bookForm.setAttribute("name", "bookForm");
+        bookForm.setAttribute("method", "dialog");
         
 
         const labelTitle = document.createElement('label');
