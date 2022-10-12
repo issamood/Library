@@ -7,9 +7,21 @@ function Book(author, title, pages, haveRead) {
     this.haveRead = haveRead;
 }
 
+Book.prototype.changeRead = function() {
+    if (this.haveRead === 'yes') {
+        console.log('it worked')
+        this.haveRead = 'no';
+    }
+    else if (this.haveRead === 'no'){
+        console.log('it worked')
+        this.haveRead = 'yes';
+    }
+}
+
 function displayLibrary(library) {
     let libraryBox = document.querySelector('.libraryBox');
     let allBooks = document.querySelectorAll('.book');
+    let bookNumber = 0;
 
     allBooks.forEach(book => {
         libraryBox.removeChild(book);
@@ -17,6 +29,8 @@ function displayLibrary(library) {
 
     for (let book of library) {
             let divBook = document.createElement('div');
+            divBook.setAttribute('id',bookNumber);
+            bookNumber += 1;
             divBook.setAttribute('class','book');
             libraryBox.appendChild(divBook);
 
@@ -37,9 +51,27 @@ function displayLibrary(library) {
 
             let haveReadDiv = document.createElement('div');
             haveReadDiv.textContent = "Have read: " + book.haveRead;
-            divBook.setAttribute('id', 'haveRead');
+            haveReadDiv.setAttribute('id', 'haveRead' + book.title);
             divBook.appendChild(haveReadDiv);
             
+            const readBtn = document.createElement('button');
+            readBtn.textContent = 'Have read';
+            readBtn.setAttribute('id', book.title);
+            readBtn.addEventListener('click', () => {
+                for(let book of myLibrary){
+                    if (book.title = readBtn.getAttribute('id')){
+                        divBook.removeChild(document.getElementById('haveRead' + book.title));
+                        book.changeRead();
+                        let haveReadDiv = document.createElement('div');
+                        haveReadDiv.setAttribute('id','haveRead' + book.title);
+                        haveReadDiv.textContent = "Have read: " + book.haveRead;
+                        divBook.insertBefore(haveReadDiv,readBtn);
+                    }
+                }
+            })
+            divBook.appendChild(readBtn);
+            
+
     }
 }
 
@@ -76,6 +108,8 @@ function addBookToLibrary() {
     displayLibrary(myLibrary);
 }
 
+
+//Create Form
 let bookBtn = document.querySelector("#newBookBtn");
 bookBtn.addEventListener('click', () => {
     if (document.body.contains(document.querySelector("#bookForm"))) {
